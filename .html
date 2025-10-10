@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KeyPort - Pitch Deck</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Roboto+Mono:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0A0A0A !important;
+            color: #FAFAFA;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        /* Page setup for PDF export */
+        .slide {
+            width: 1920px;
+            height: 1080px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 100px 120px;
+            position: relative;
+            background: #0A0A0A !important;
+            page-break-after: always;
+            page-break-inside: avoid;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        /* Scanlines subtle background */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0, 0, 0, 0.1),
+                    rgba(0, 0, 0, 0.1) 1px,
+                    transparent 1px,
+                    transparent 3px);
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1600px;
+        }
+
+        /* Logo in corner of each slide */
+        .slide-logo {
+            position: absolute;
+            top: 60px;
+            left: 60px;
+            opacity: 0.4;
+        }
+
+        .slide-logo svg {
+            width: 60px;
+            height: 72px;
+        }
+
+        /* Slide number */
+        .slide-number {
+            position: absolute;
+            top: 60px;
+            right: 60px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 18px;
+            color: #52525B;
+            letter-spacing: 2px;
+        }
+
+        /* SLIDE 1 - HERO */
+        .slide-1 {
+            text-align: center;
+            justify-content: center;
+        }
+
+        .slide-1 .main-logo {
+            width: 280px;
+            height: 336px;
+            margin-bottom: 80px;
+            filter: drop-shadow(0 0 40px rgba(132, 204, 22, 0.4));
+        }
+
+        .slide-1 h1 {
+            font-size: 120px;
+            font-weight: 900;
+            letter-spacing: 12px;
+            margin-bottom: 40px;
+            color: #FAFAFA;
+            text-transform: uppercase;
+        }
+
+        .slide-1 .tagline {
+            font-size: 36px;
+            font-weight: 300;
+            color: #A1A1AA;
+            margin-bottom: 30px;
+            letter-spacing: 3px;
+        }
+
+        .neon-line {
+            width: 300px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #84CC16, transparent);
+            margin: 40px auto;
+            box-shadow: 0 0 15px #84CC16;
+        }
+
+        .slide-1 .subtitle {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 18px;
+            color: #71717A;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* SLIDES 2-5 - Content Slides */
+        .section-header {
+            margin-bottom: 100px;
+        }
+
+        .section-number {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 20px;
+            color: #52525B;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-size: 80px;
+            font-weight: 700;
+            color: #FAFAFA;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .title-line {
+            width: 200px;
+            height: 4px;
+            margin-top: 20px;
+        }
+
+        .title-line.danger {
+            background: #EF4444;
+            box-shadow: 0 0 15px #EF4444;
+        }
+
+        .title-line.success {
+            background: #84CC16;
+            box-shadow: 0 0 15px #84CC16;
+        }
+
+        .title-line.tech {
+            background: #7C3AED;
+            box-shadow: 0 0 15px #7C3AED;
+        }
+
+        /* SLIDE 2 - THE PROBLEM */
+        .problem-container {
+            display: grid;
+            grid-template-columns: 1fr 3px 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .problem-column {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+
+        .column-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #84CC16;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .column-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: #84CC16;
+            box-shadow: 0 0 10px #84CC16;
+        }
+
+        .problem-divider {
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, #EF4444, transparent);
+            box-shadow: 0 0 15px #EF4444;
+            position: relative;
+        }
+
+        .problem-divider::before {
+            content: 'VS';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #0A0A0A;
+            padding: 15px 20px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 24px;
+            font-weight: 700;
+            color: #EF4444;
+            border: 2px solid #EF4444;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+        }
+
+        .problem-item {
+            border-left: 3px solid #27272A;
+            padding: 20px 30px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .problem-item::before {
+            content: '';
+            position: absolute;
+            left: -3px;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: #EF4444;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 10px #EF4444;
+        }
+
+        .problem-item h3 {
+            font-size: 24px;
+            color: #FAFAFA;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .problem-item p {
+            font-size: 16px;
+            color: #A1A1AA;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* SLIDE 3 - THE SOLUTION */
+        .solution-subtitle {
+            font-size: 24px;
+            color: #71717A;
+            margin-bottom: 80px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: #0A0A0A;
+            border: 2px solid #27272A;
+            padding: 40px 30px;
+        }
+
+        .feature-number {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 16px;
+            color: #52525B;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .feature-card h3 {
+            font-size: 26px;
+            color: #FAFAFA;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            font-size: 17px;
+            color: #A1A1AA;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* SLIDE 4 - WHY SOLANA */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 50px;
+        }
+
+        .tech-card {
+            border: 2px solid #27272A;
+            padding: 50px;
+            background: #0A0A0A;
+        }
+
+        .tech-metric {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 72px;
+            color: #7C3AED;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 0 25px rgba(124, 58, 237, 0.6);
+        }
+
+        .tech-card h4 {
+            font-size: 32px;
+            color: #FAFAFA;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .tech-card p {
+            font-size: 18px;
+            color: #A1A1AA;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        /* SLIDE 5 - JOIN US */
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .role-card {
+            background: #0A0A0A;
+            border: 2px solid #27272A;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .role-card h3 {
+            font-size: 24px;
+            color: #FAFAFA;
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .role-card p {
+            font-size: 16px;
+            color: #71717A;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .contact-section {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 60px;
+            border-top: 2px solid #27272A;
+        }
+
+        .contact-section h3 {
+            font-size: 36px;
+            color: #FAFAFA;
+            margin-bottom: 50px;
+            font-weight: 600;
+        }
+
+        .contact-grid {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .contact-item {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 18px;
+            padding: 25px 40px;
+            background: #27272A;
+            border: 3px solid #84CC16;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(132, 204, 22, 0.6),
+                0 0 40px rgba(132, 204, 22, 0.3),
+                inset 0 0 20px rgba(132, 204, 22, 0.1);
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(132, 204, 22, 0.9),
+                0 0 60px rgba(132, 204, 22, 0.5),
+                0 10px 40px rgba(132, 204, 22, 0.4);
+            border-color: #BEF264;
+        }
+
+        .contact-label {
+            color: #FAFAFA;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-right: 8px;
+        }
+
+        .contact-value {
+            color: #FAFAFA;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: #0A0A0A !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .slide {
+                page-break-after: always;
+                page-break-inside: avoid;
+                background: #0A0A0A !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        @page {
+            size: 1920px 1080px;
+            margin: 0;
+            background: #0A0A0A !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- SLIDE 1: HERO -->
+    <div class="slide slide-1">
+        <svg class="main-logo" viewBox="0 0 400 480" width="280" height="336">
+            <defs>
+                <linearGradient id="purpleBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#8B5CF6" />
+                    <stop offset="100%" style="stop-color:#6B21A8" />
+                </linearGradient>
+                <radialGradient id="vaultGreen">
+                    <stop offset="0%" style="stop-color:#BEF264" />
+                    <stop offset="50%" style="stop-color:#A3E635" />
+                    <stop offset="100%" style="stop-color:#84CC16" />
+                </radialGradient>
+            </defs>
+            <rect x="20" y="20" width="360" height="360" rx="80" fill="url(#purpleBg)" />
+            <ellipse cx="200" cy="190" rx="120" ry="108" fill="url(#vaultGreen)" />
+            <ellipse cx="200" cy="190" rx="90" ry="82" fill="#65A30D" />
+            <ellipse cx="200" cy="190" rx="60" ry="55" fill="#4D7C0F" />
+            <circle cx="200" cy="175" r="26" fill="#18181B" />
+            <circle cx="211" cy="166" r="3" fill="#C4B5FD" />
+            <rect x="194.5" y="201" width="11" height="50" rx="2" fill="#18181B" />
+            <rect x="205.5" y="216" width="16" height="6" rx="1.5" fill="#18181B" />
+            <rect x="205.5" y="229" width="22" height="6" rx="1.5" fill="#18181B" />
+            <rect x="205.5" y="242" width="13" height="6" rx="1.5" fill="#18181B" />
+            <text x="200" y="340" font-family="Helvetica, Arial, sans-serif" font-size="46" font-weight="900"
+                fill="#FFFFFF" text-anchor="middle" letter-spacing="4">KeyPort</text>
+        </svg>
+
+        <h1>KEYPORT</h1>
+        <div class="neon-line"></div>
+        <p class="tagline">Your passport to rent anywhere</p>
+        <p class="subtitle">Decentralized Reputation Protocol</p>
+    </div>
+
+    <!-- SLIDE 2: THE PROBLEM -->
+    <div class="slide slide-2">
+        <div class="slide-logo">
+            <svg viewBox="0 0 400 480" width="60" height="72">
+                <rect x="20" y="20" width="360" height="360" rx="80" fill="#6B21A8" />
+                <ellipse cx="200" cy="190" rx="120" ry="108" fill="#84CC16" />
+                <ellipse cx="200" cy="190" rx="60" ry="55" fill="#4D7C0F" />
+                <circle cx="200" cy="175" r="26" fill="#18181B" />
+                <rect x="194.5" y="201" width="11" height="50" rx="2" fill="#18181B" />
+            </svg>
+        </div>
+        <div class="slide-number">01 / 05</div>
+
+        <div class="slide-content">
+            <div class="section-header">
+                <div class="section-number">[01]</div>
+                <h2 class="section-title">THE PROBLEM</h2>
+                <div class="title-line danger"></div>
+            </div>
+
+            <div class="problem-list">
+                <div class="problem-item">
+                    <h3>Market Inefficiency</h3>
+                    <p>Millions of digital nomads, international students, and professionals face housing barriers when
+                        relocating. This creates massive friction in global mobility and labor markets.</p>
+                </div>
+
+                <div class="problem-item">
+                    <h3>Reputation Doesn't Travel</h3>
+                    <p>When tenants move internationally, their rental history remains locked in local systems. Every
+                        relocation requires starting from zero, regardless of years of perfect payment records.</p>
+                </div>
+
+                <div class="problem-item">
+                    <h3>No Trust, No Access</h3>
+                    <p>Landlords lack reliable verification methods for foreign tenants. Without verifiable history,
+                        they reject qualified candidates or demand excessive security deposits to protect themselves.
+                    </p>
+                </div>
+
+                <div class="problem-item">
+                    <h3>Your Data, Their Control</h3>
+                    <p>Platforms like Airbnb and credit agencies own your reputation data. You cannot export it, and
+                        they can delete or monetize it without your consent.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: THE SOLUTION -->
+    <div class="slide slide-3">
+        <div class="slide-logo">
+            <svg viewBox="0 0 400 480" width="60" height="72">
+                <rect x="20" y="20" width="360" height="360" rx="80" fill="#6B21A8" />
+                <ellipse cx="200" cy="190" rx="120" ry="108" fill="#84CC16" />
+                <ellipse cx="200" cy="190" rx="60" ry="55" fill="#4D7C0F" />
+                <circle cx="200" cy="175" r="26" fill="#18181B" />
+                <rect x="194.5" y="201" width="11" height="50" rx="2" fill="#18181B" />
+            </svg>
+        </div>
+        <div class="slide-number">02 / 05</div>
+
+        <div class="slide-content">
+            <div class="section-header">
+                <div class="section-number">[02]</div>
+                <h2 class="section-title">THE SOLUTION</h2>
+                <div class="title-line success"></div>
+            </div>
+
+            <p class="solution-subtitle">A decentralized reputation protocol built on Solana blockchain</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-number">[01]</div>
+                    <h3>Unforgeable Proof</h3>
+                    <p>Paper contracts can be faked or lost. NFTs on Solana create permanent, tamper-proof records that
+                        both parties signed and completed successfully.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-number">[02]</div>
+                    <h3>On-Chain Attestations</h3>
+                    <p>Leveraging Solana's compressed accounts for 1000x cost reduction while maintaining full
+                        transparency. Each rental = cryptographic proof, permanently recorded.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-number">[03]</div>
+                    <h3>Protected Identity</h3>
+                    <p>Zero-knowledge proofs protect your personal data. Prove you're reliable without exposing passport
+                        numbers, addresses, or income details.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-number">[04]</div>
+                    <h3>Never Lost, Never Destroyed</h3>
+                    <p>Unlike paper documents that can burn, flood, or disappear, your blockchain reputation is
+                        permanent and accessible from any device, anywhere.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-number">[05]</div>
+                    <h3>Two-Way Accountability</h3>
+                    <p>Both sides build reputation. Bad landlords get exposed, unreliable tenants can't hide. The system
+                        creates mutual trust through transparency.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-number">[06]</div>
+                    <h3>Truly Yours</h3>
+                    <p>Your reputation lives in your wallet, not on a company's server. No one can delete your history
+                        when you switch platforms or countries.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: WHY SOLANA -->
+    <div class="slide slide-4">
+        <div class="slide-logo">
+            <svg viewBox="0 0 400 480" width="60" height="72">
+                <rect x="20" y="20" width="360" height="360" rx="80" fill="#6B21A8" />
+                <ellipse cx="200" cy="190" rx="120" ry="108" fill="#84CC16" />
+                <ellipse cx="200" cy="190" rx="60" ry="55" fill="#4D7C0F" />
+                <circle cx="200" cy="175" r="26" fill="#18181B" />
+                <rect x="194.5" y="201" width="11" height="50" rx="2" fill="#18181B" />
+            </svg>
+        </div>
+        <div class="slide-number">03 / 05</div>
+
+        <div class="slide-content">
+            <div class="section-header">
+                <div class="section-number">[03]</div>
+                <h2 class="section-title">WHY SOLANA</h2>
+                <div class="title-line tech"></div>
+            </div>
+
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <div class="tech-metric">400ms</div>
+                    <h4>Transaction Speed</h4>
+                    <p>Near-instant attestation verification enables real-time reputation updates. Users experience
+                        immediate confirmations during rental applications.</p>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-metric">&lt;$0.01</div>
+                    <h4>Transaction Cost</h4>
+                    <p>Micro-transaction economics make frequent attestations economically viable. Users can build
+                        reputation through multiple interactions without prohibitive fees.</p>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-metric">65K+</div>
+                    <h4>Transactions/Second</h4>
+                    <p>Built for global scale from inception. Capable of handling millions of simultaneous rental
+                        verifications worldwide without network congestion.</p>
+                </div>
+
+                <div class="tech-card">
+                    <div class="tech-metric">∞</div>
+                    <h4>Composability</h4>
+                    <p>Native integration with DeFi protocols, identity systems, and DAOs. Future roadmap includes
+                        collateral-free deposits and automated dispute resolution.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: JOIN US -->
+    <div class="slide slide-5">
+        <div class="slide-logo">
+            <svg viewBox="0 0 400 480" width="60" height="72">
+                <rect x="20" y="20" width="360" height="360" rx="80" fill="#6B21A8" />
+                <ellipse cx="200" cy="190" rx="120" ry="108" fill="#84CC16" />
+                <ellipse cx="200" cy="190" rx="60" ry="55" fill="#4D7C0F" />
+                <circle cx="200" cy="175" r="26" fill="#18181B" />
+                <rect x="194.5" y="201" width="11" height="50" rx="2" fill="#18181B" />
+            </svg>
+        </div>
+        <div class="slide-number">05 / 05</div>
+
+        <div class="slide-content">
+            <div class="section-header">
+                <div class="section-number">[05]</div>
+                <h2 class="section-title">JOIN THE VISION</h2>
+                <div class="title-line success"></div>
+            </div>
+
+            <p class="solution-subtitle" style="margin-bottom: 60px; font-size: 22px;">I bring design, marketing, and
+                business strategy. Looking for technical co-founders to build the future.</p>
+
+            <div class="roles-grid">
+                <div class="role-card">
+                    <h3>Solana Developer</h3>
+                    <p>Anchor • Rust • Smart Contracts • Program Architecture</p>
+                </div>
+
+                <div class="role-card">
+                    <h3>Full-Stack Engineer</h3>
+                    <p>React • Web3.js • Backend • Wallet Integration</p>
+                </div>
+
+                <div class="role-card">
+                    <h3>Blockchain Architect</h3>
+                    <p>Protocol Design • Scalability • Security</p>
+                </div>
+
+                <div class="role-card">
+                    <h3>Cryptography Expert</h3>
+                    <p>Zero-Knowledge Proofs • Privacy Layer</p>
+                </div>
+
+                <div class="role-card">
+                    <h3>DevOps Engineer</h3>
+                    <p>Infrastructure • CI/CD • Monitoring</p>
+                </div>
+
+                <div class="role-card">
+                    <h3>Technical Co-Founder</h3>
+                    <p>Lead Development • Technical Vision</p>
+                </div>
+            </div>
+
+            <div class="contact-section">
+                <h3>Great ideas need great builders. Let's create trust, together.</h3>
+                <div class="contact-grid">
+                    <div class="contact-item">EMAIL: cristina.co95@hotmail.com</div>
+                    <div class="contact-item">DISCORD: TesitoWeb3</div>
+                    <div class="contact-item">X: @ErgoMatch</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
